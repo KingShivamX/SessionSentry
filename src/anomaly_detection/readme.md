@@ -267,3 +267,94 @@ The deployment process will include:
 2. **A/B testing**: Comparing rule-based vs. hybrid model approaches in production
 3. **Threshold adjustment**: Fine-tuning anomaly thresholds based on operational requirements
 4. **Feedback loop**: Incorporating security analyst feedback to improve detection accuracy
+
+## Project Roadmap
+
+### Phase 1: Windows Event Log Integration (In Progress)
+- **ETL Pipeline Development**
+  - Create Windows Event Log collectors using PowerShell and WMI
+  - Implement preprocessing for raw event data
+  - Develop data transformation to match model input requirements
+  
+- **Technical Implementation**:
+  ```powershell
+  # Example PowerShell script to collect Windows Event Logs
+  Get-WinEvent -LogName Security -FilterXPath "*[System[EventID=4624 or EventID=4634]]" | 
+  Select-Object TimeCreated,EventID,Message | 
+  Export-Csv -Path "windows_events.csv" -NoTypeInformation
+  ```
+
+### Phase 2: Real-Time Monitoring (Upcoming)
+- **Service Development**
+  - Create Windows service for continuous monitoring
+  - Implement queuing system for event processing
+  - Develop batching mechanism for efficient prediction
+  
+- **Technical Implementation**:
+  ```python
+  # Planned implementation in service.py
+  class WindowsEventMonitor:
+      def __init__(self, model_path, check_interval=60):
+          self.model = load_model(model_path)
+          self.check_interval = check_interval
+          self.event_queue = Queue()
+          
+      def start_monitoring(self):
+          """Start continuous monitoring thread"""
+          while True:
+              events = collect_recent_events()
+              for event in events:
+                  self.event_queue.put(event)
+              self.process_events()
+              time.sleep(self.check_interval)
+  ```
+
+### Phase 3: Alert System (Upcoming)
+- **Notification Framework**
+  - Implement tiered alerting based on severity
+  - Develop email, SMS, and system notification capabilities
+  - Create alert aggregation to prevent alert fatigue
+  
+- **Technical Implementation**:
+  ```python
+  # Planned implementation in alerting.py
+  class AlertManager:
+      def __init__(self, config_path):
+          self.config = load_config(config_path)
+          self.alert_history = {}
+          
+      def send_alert(self, anomaly_data, severity="medium"):
+          """Send alerts through configured channels based on severity"""
+          if self.should_throttle(anomaly_data):
+              return False
+              
+          if severity == "high":
+              self.send_sms(anomaly_data)
+              self.send_email(anomaly_data)
+          
+          self.log_alert(anomaly_data)
+          return True
+  ```
+
+### Phase 4: User Interface Development (Future)
+- **Dashboard Features**
+  - Real-time anomaly visualization
+  - Historical trend analysis
+  - User behavior profiling
+  - Investigation workflow tools
+  
+- **Technical Stack**:
+  - Backend: Flask API for data access
+  - Frontend: React with D3.js visualizations
+  - Authentication: Windows integrated authentication
+
+### Phase 5: Advanced Features (Future)
+- **Machine Learning Enhancements**
+  - User behavior clustering for personalized baselines
+  - Time-series analysis for temporal pattern detection
+  - Transfer learning from similar environments
+  
+- **Enterprise Integration**
+  - Active Directory integration for user context
+  - SIEM integration (Splunk, Azure Sentinel)
+  - Automated response capabilities
