@@ -1,0 +1,39 @@
+2025-04-11 23:57:23,231 - SessionSentry - INFO - Starting SessionSentry...
+2025-04-11 23:57:23,231 - SessionSentry - INFO - Initializing event collection...
+2025-04-11 23:57:23,232 - SessionSentry.EventCollector - INFO - EventCollector initialized for localhost/Security
+2025-04-11 23:57:23,232 - SessionSentry - INFO - Initializing anomaly detection...
+2025-04-11 23:57:23,232 - SessionSentry.AnomalyDetector - INFO - No existing model found. Model will be trained on first run.
+2025-04-11 23:57:23,232 - SessionSentry.AnomalyDetector - INFO - AnomalyDetector initialized
+2025-04-11 23:57:23,232 - SessionSentry - INFO - Initializing email reporting...
+2025-04-11 23:57:23,232 - SessionSentry.EmailReporter - WARNING - Email settings incomplete. Email reporting will be disabled.
+2025-04-11 23:57:23,233 - SessionSentry.EmailReporter - ERROR - Error creating default templates: 'charmap' codec can't encode character '\u2757' in position 401: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\reporting\email_reporter.py", line 71, in _create_default_templates
+    f.write("""<!DOCTYPE html>
+  File "C:\Users\shiva\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2757' in position 401: character maps to <undefined>
+2025-04-11 23:57:23,250 - SessionSentry - INFO - SessionSentry is running. Press Ctrl+C to exit.
+2025-04-11 23:57:23,250 - SessionSentry.EventCollector - INFO - Collecting events...
+2025-04-11 23:57:23,279 - SessionSentry.EventCollector - INFO - Collected 0 login/logout events
+2025-04-11 23:57:23,280 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:02:23,281 - SessionSentry.EventCollector - INFO - Collecting events...
+2025-04-12 00:02:23,312 - SessionSentry.EventCollector - INFO - Collected 0 login/logout events
+2025-04-12 00:02:23,313 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:08:58,676 - SessionSentry - INFO - Starting SessionSentry...
+2025-04-12 00:08:58,682 - SessionSentry - INFO - Initializing event collection...
+2025-04-12 00:08:58,688 - SessionSentry.EventCollector - INFO - EventCollector initialized for localhost/Security
+2025-04-12 00:08:58,710 - SessionSentry - INFO - Initializing anomaly detection...
+2025-04-12 00:08:58,716 - SessionSentry.AnomalyDetector - INFO - No existing model found. Model will be trained on first run.
+2025-04-12 00:08:58,718 - SessionSentry.AnomalyDetector - INFO - AnomalyDetector initialized
+2025-04-12 00:08:58,719 - SessionSentry - INFO - Initializing email reporting...
+2025-04-12 00:08:58,728 - SessionSentry.EmailReporter - WARNING - Email settings incomplete. Email reporting will be disabled.
+2025-04-12 00:08:58,731 - SessionSentry.EmailReporter - INFO - Created default daily report template
+2025-04-12 00:08:58,733 - SessionSentry - INFO - SessionSentry is running. Press Ctrl+C to exit.
+2025-04-12 00:08:58,735 - SessionSentry.EventCollector - INFO - Collecting events...
+2025-04-12 00:08:58,778 - SessionSentry.EventCollector - INFO - Collected 0 login/logout events
+2025-04-12 00:08:58,778 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:13:58,780 - SessionSentry.EventCollector - INFO - Collecting events...
+2025-04-12 00:13:58,787 - SessionSentry.EventCollector - INFO - Collected 0 login/logout events
+2025-04-12 00:13:58,788 - SessionSentry.AnomalyDetector - INFO - No events to analyze

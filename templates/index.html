@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SessionSentry Dashboard</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 20px;
+                background-color: #f5f5f5;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 5px;
+            }
+            h1 {
+                color: #333;
+                margin-bottom: 20px;
+                border-bottom: 2px solid #eee;
+                padding-bottom: 10px;
+            }
+            .stats-container {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0 -10px;
+            }
+            .stat-card {
+                flex: 1 0 calc(25% - 20px);
+                margin: 10px;
+                padding: 20px;
+                background-color: #f9f9f9;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+            .stat-card h2 {
+                margin: 0 0 10px 0;
+                font-size: 1.2rem;
+                color: #555;
+            }
+            .stat-value {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #333;
+            }
+            .chart-container {
+                margin-top: 30px;
+                padding: 20px;
+                background-color: #f9f9f9;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+            .section-header {
+                margin-top: 40px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eee;
+            }
+            .nav {
+                background-color: #333;
+                overflow: hidden;
+                margin-bottom: 20px;
+                border-radius: 5px;
+            }
+            .nav a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+            .nav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            .nav a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+            .card-links {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0 -10px;
+            }
+            .card-link {
+                flex: 1 0 calc(33.3333% - 20px);
+                margin: 10px;
+                padding: 20px;
+                background-color: #f9f9f9;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                text-decoration: none;
+                color: #333;
+                transition: transform 0.2s;
+            }
+            .card-link:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            .card-link h2 {
+                margin: 0 0 10px 0;
+                font-size: 1.2rem;
+                color: #555;
+            }
+            .card-link-icon {
+                font-size: 3rem;
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="nav">
+                <a href="/" class="active">Dashboard</a>
+                <a href="/events">All Events</a>
+                <a href="/anomalies">Anomalies</a>
+                <a href="/current_events">Current Events</a>
+            </div>
+
+            <h1>SessionSentry Dashboard</h1>
+
+            <div class="stats-container" id="stats">
+                <div class="stat-card">
+                    <h2>Total Events</h2>
+                    <div class="stat-value" id="total-events">--</div>
+                </div>
+                <div class="stat-card">
+                    <h2>Logins</h2>
+                    <div class="stat-value" id="total-logins">--</div>
+                </div>
+                <div class="stat-card">
+                    <h2>Logouts</h2>
+                    <div class="stat-value" id="total-logouts">--</div>
+                </div>
+                <div class="stat-card">
+                    <h2>Anomalies</h2>
+                    <div class="stat-value" id="total-anomalies">--</div>
+                </div>
+            </div>
+
+            <h2 class="section-header">Quick Access</h2>
+
+            <div class="card-links">
+                <a href="/events" class="card-link">
+                    <div class="card-link-icon">📋</div>
+                    <h2>All Login Events</h2>
+                    <p>View the complete history of login and logout events</p>
+                </a>
+                <a href="/anomalies" class="card-link">
+                    <div class="card-link-icon">⚠️</div>
+                    <h2>Anomalies</h2>
+                    <p>Review detected anomalous login activities</p>
+                </a>
+                <a href="/current_events" class="card-link">
+                    <div class="card-link-icon">🔄</div>
+                    <h2>Current Events</h2>
+                    <p>View real-time login events as they occur</p>
+                </a>
+            </div>
+
+            <h2 class="section-header">Activity Over Time</h2>
+
+            <div class="chart-container">
+                <canvas id="activity-chart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="hourly-chart"></canvas>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Fetch dashboard statistics
+            fetch('/api/stats?days=7')
+                .then(response => response.json())
+                .then(data => {
+                    // Update statistics
+                    document.getElementById('total-events').textContent = data.total_events;
+                    document.getElementById('total-logins').textContent = data.total_logins;
+                    document.getElementById('total-logouts').textContent = data.total_logouts;
+                    document.getElementById('total-anomalies').textContent = data.total_anomalies;
+
+                    // Create activity chart
+                    if (data.events_by_day.length > 0) {
+                        const activityChart = new Chart(
+                            document.getElementById('activity-chart'),
+                            {
+                                type: 'bar',
+                                data: {
+                                    labels: data.events_by_day.map(d => d.date),
+                                    datasets: [
+                                        {
+                                            label: 'Logins',
+                                            data: data.events_by_day.map(d => d.login),
+                                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                                        },
+                                        {
+                                            label: 'Logouts',
+                                            data: data.events_by_day.map(d => d.logout),
+                                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        title: {
+                                            display: true,
+                                            text: 'Login/Logout Events by Day'
+                                        }
+                                    }
+                                }
+                            }
+                        );
+                    }
+
+                    // Create hourly chart
+                    if (data.events_by_hour.length > 0) {
+                        const hourLabels = Array.from({length: 24}, (_, i) => `${i}:00`);
+                        const hourlyLogins = Array(24).fill(0);
+                        const hourlyLogouts = Array(24).fill(0);
+
+                        data.events_by_hour.forEach(h => {
+                            hourlyLogins[h.hour] = h.login;
+                            hourlyLogouts[h.hour] = h.logout;
+                        });
+
+                        const hourlyChart = new Chart(
+                            document.getElementById('hourly-chart'),
+                            {
+                                type: 'line',
+                                data: {
+                                    labels: hourLabels,
+                                    datasets: [
+                                        {
+                                            label: 'Logins',
+                                            data: hourlyLogins,
+                                            borderColor: 'rgba(54, 162, 235, 1)',
+                                            backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                                            fill: true,
+                                            tension: 0.4
+                                        },
+                                        {
+                                            label: 'Logouts',
+                                            data: hourlyLogouts,
+                                            borderColor: 'rgba(255, 99, 132, 1)',
+                                            backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                                            fill: true,
+                                            tension: 0.4
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        title: {
+                                            display: true,
+                                            text: 'Login/Logout Events by Hour of Day'
+                                        }
+                                    }
+                                }
+                            }
+                        );
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching stats:', error);
+                });
+        </script>
+    </body>
+</html>

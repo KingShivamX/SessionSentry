@@ -1,0 +1,23 @@
+[
+    {
+        "event_id": 4624,
+        "time": "2023-04-15T08:30:45",
+        "computer_name": "DESKTOP-USER1",
+        "user_name": "john.doe",
+        "event_type": "Login"
+    },
+    {
+        "event_id": 4624,
+        "time": "2023-04-15T09:15:22",
+        "computer_name": "DESKTOP-USER1",
+        "user_name": "admin",
+        "event_type": "Login"
+    },
+    {
+        "event_id": 4634,
+        "time": "2023-04-15T12:45:31",
+        "computer_name": "DESKTOP-USER1",
+        "user_name": "john.doe",
+        "event_type": "Logout"
+    }
+]
