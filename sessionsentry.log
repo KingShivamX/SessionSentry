@@ -37,3 +37,366 @@ UnicodeEncodeError: 'charmap' codec can't encode character '\u2757' in position 
 2025-04-12 00:13:58,780 - SessionSentry.EventCollector - INFO - Collecting events...
 2025-04-12 00:13:58,787 - SessionSentry.EventCollector - INFO - Collected 0 login/logout events
 2025-04-12 00:13:58,788 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:06,314 - SessionSentry - INFO - Starting SessionSentry...
+2025-04-12 00:19:06,315 - SessionSentry - INFO - Initializing database...
+2025-04-12 00:19:06,315 - SessionSentry.Database - INFO - Initializing database...
+2025-04-12 00:19:06,316 - SessionSentry.Database - INFO - Database initialized successfully.
+2025-04-12 00:19:06,317 - SessionSentry - INFO - Initializing Windows event logger...
+2025-04-12 00:19:06,330 - SessionSentry.WindowsEventLogger - INFO - WindowsEventLogger initialized for localhost/Security
+2025-04-12 00:19:06,330 - SessionSentry - INFO - Initializing anomaly detection...
+2025-04-12 00:19:06,330 - SessionSentry.AnomalyDetector - INFO - No existing model found. Model will be trained on first run.
+2025-04-12 00:19:06,330 - SessionSentry.AnomalyDetector - INFO - AnomalyDetector initialized
+2025-04-12 00:19:06,330 - SessionSentry - INFO - Initializing email reporting...
+2025-04-12 00:19:06,331 - SessionSentry.EmailReporter - WARNING - Email settings incomplete. Email reporting will be disabled.
+2025-04-12 00:19:06,332 - SessionSentry - INFO - SessionSentry is running. Press Ctrl+C to exit.
+2025-04-12 00:19:06,333 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:06,334 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:06,334 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:06,334 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:06,335 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:06,335 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:06,336 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:07,338 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:07,339 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:07,340 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:07,341 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:07,342 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:07,342 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:07,343 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:08,344 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:08,345 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:08,346 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:08,347 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:08,347 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:08,348 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:08,348 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:09,351 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:09,352 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:09,354 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:09,355 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:09,356 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:09,357 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:09,358 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:10,360 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:10,362 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:10,363 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:10,364 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:10,365 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:10,366 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:10,367 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:11,370 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:11,371 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:11,372 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:11,373 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:11,373 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:11,375 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:11,375 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:12,378 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:12,379 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:12,380 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:12,381 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:12,381 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:12,382 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:12,383 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:13,389 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:13,391 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:13,392 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:13,393 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:13,393 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:13,394 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:13,395 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:14,398 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:14,399 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:14,404 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:14,405 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:14,406 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:14,407 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:14,407 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:15,409 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:15,410 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:15,411 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:15,412 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:15,413 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:15,414 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:15,414 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:16,419 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:16,420 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:16,421 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:16,421 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:16,422 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:16,422 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:16,423 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:17,425 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:17,426 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:17,427 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:17,428 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:17,429 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:17,429 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:17,430 - SessionSentry.AnomalyDetector - INFO - No events to analyze
+2025-04-12 00:19:18,434 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:18,435 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:18,436 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:18,436 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:18,437 - SessionSentry.WindowsEventLogger - ERROR - Error parsing event: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+Traceback (most recent call last):
+  File "C:\Coding\SessionSentry\src\data_collection\windows_event_logger.py", line 54, in get_new_events
+    int(event.TimeGenerated)
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'pywintypes.datetime'
+2025-04-12 00:19:18,437 - SessionSentry.WindowsEventLogger - INFO - Collected 0 new login/logout events
+2025-04-12 00:19:18,438 - SessionSentry.AnomalyDetector - INFO - No events to analyze
