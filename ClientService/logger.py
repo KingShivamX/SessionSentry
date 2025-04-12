@@ -78,8 +78,10 @@ class WindowsEventLogger:
             # Open the event log
             self.hand = win32evtlog.OpenEventLog(self.server, self.logtype)
             
-            # Use sequential read, we'll change direction as needed
+            # Use newest read to get latest events first
             self.flags = win32evtlog.EVENTLOG_FORWARDS_READ | win32evtlog.EVENTLOG_SEQUENTIAL_READ
+            # Alternatively, you can use this to always get newest events:
+            # self.flags = win32evtlog.EVENTLOG_BACKWARDS_READ | win32evtlog.EVENTLOG_SEQUENTIAL_READ
             
             # Current time to start monitoring from
             self.last_event_time = datetime.datetime.now() - datetime.timedelta(hours=1)  # Look back just 1 hour
@@ -427,20 +429,44 @@ class WindowsEventLogger:
             print(f"[!] Error reading events file: {e}")
             existing_events = []
         
-        # Add new events to the list
-        existing_events.extend(events)
+        # Add new events to the list in chronological order
+        # Sort events by time to ensure proper sequence
+        events_with_time = []
+        for event in events:
+            # Convert time string to datetime object for sorting if needed
+            if isinstance(event['time'], str):
+                try:
+                    if 'T' in event['time']:
+                        dt = datetime.datetime.fromisoformat(event['time'])
+                    else:
+                        dt = datetime.datetime.strptime(event['time'], "%Y-%m-%d %H:%M")
+                    events_with_time.append((dt, event))
+                except (ValueError, TypeError):
+                    # If time parsing fails, just use current time
+                    events_with_time.append((datetime.datetime.now(), event))
+            else:
+                events_with_time.append((datetime.datetime.now(), event))
         
-        # Write updated events to the JSON file
+        # Sort events by time
+        events_with_time.sort(key=lambda x: x[0])
+        
+        # Extend the existing list with sorted events
+        for _, event in events_with_time:
+            existing_events.append(event)
+        
+        # Write updated events to the JSON file immediately
         try:
             with open(json_file, 'w') as f:
                 json.dump(existing_events, f, indent=4)
+                f.flush()
+                os.fsync(f.fileno())  # Force disk write for instant results
         except Exception as e:
             print(f"[!] Error writing events file: {e}")
         
-        # Also write to the daily log file
+        # Also write to the daily log file - write events in the same sorted order
         try:
             with open(log_file, 'a') as f:
-                for event in events:
+                for _, event in events_with_time:
                     f.write(f"Time: {event['time']}\n")
                     f.write(f"Event Type: {event['event_type']}\n")
                     f.write(f"User: {event['user_name']}\n")
@@ -448,6 +474,9 @@ class WindowsEventLogger:
                     f.write(f"IP Address: {event['ip_address']}\n")
                     f.write(f"Event ID: {event['event_id']}\n")
                     f.write("-" * 50 + "\n\n")
+                    # Flush after each event for immediate writing
+                    f.flush()
+                    os.fsync(f.fileno())
         except Exception as e:
             print(f"[!] Error writing log file: {e}")
         
