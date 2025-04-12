@@ -242,5 +242,23 @@
         "event_type": "Logout",
         "ip_address": "192.168.158.151",
         "status": "logout"
+    },
+    {
+        "event_id": 4624,
+        "time": "2025-04-12 11:21",
+        "computer_name": "desktop-s2vjimn",
+        "user_name": "NT AUTHORITY\\SYSTEM",
+        "event_type": "Login",
+        "ip_address": "192.168.158.162",
+        "status": "success"
+    },
+    {
+        "event_id": 4634,
+        "time": "2025-04-12 11:21",
+        "computer_name": "desktop-s2vjimn",
+        "user_name": "DESKTOP-S2VJIMN\\lenovo",
+        "event_type": "Logout",
+        "ip_address": "192.168.158.162",
+        "status": "logout"
     }
 ]

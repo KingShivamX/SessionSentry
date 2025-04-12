@@ -22,5 +22,45 @@
         "user_name": "SYSTEM",
         "event_type": "Login",
         "ip_address": "192.168.163.240"
+    },
+    {
+        "event_id": 4624,
+        "time": "2025-04-12 10:19",
+        "computer_name": "desktop-s2vjimn",
+        "user_name": "lenovo",
+        "event_type": "Login",
+        "ip_address": "192.168.158.162"
+    },
+    {
+        "event_id": 4634,
+        "time": "2025-04-12 10:19",
+        "computer_name": "desktop-s2vjimn",
+        "user_name": "DESKTOP-S2VJIMN\\lenovo",
+        "event_type": "Logout",
+        "ip_address": "192.168.158.162"
+    },
+    {
+        "event_id": 4624,
+        "time": "2025-04-12 10:19",
+        "computer_name": "desktop-s2vjimn",
+        "user_name": "SYSTEM",
+        "event_type": "Login",
+        "ip_address": "192.168.158.162"
+    },
+    {
+        "event_id": 4634,
+        "time": "2025-04-12 10:19",
+        "computer_name": "desktop-s2vjimn",
+        "user_name": "DESKTOP-S2VJIMN\\lenovo",
+        "event_type": "Logout",
+        "ip_address": "192.168.158.162"
+    },
+    {
+        "event_id": 4624,
+        "time": "2025-04-12 10:19",
+        "computer_name": "desktop-s2vjimn",
+        "user_name": "SYSTEM",
+        "event_type": "Login",
+        "ip_address": "192.168.158.162"
     }
 ]
