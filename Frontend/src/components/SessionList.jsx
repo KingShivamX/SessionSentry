@@ -1,74 +1,95 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion"
 
 const SessionList = ({ sessions }) => {
-  if (!sessions || sessions.length === 0) {
+    // Helper to format date
+    const formatDate = (dateString) => {
+        try {
+            if (dateString === "Current") return "Current Session"
+            return new Date(dateString).toLocaleString()
+        } catch (e) {
+            return "Unknown"
+        }
+    }
+
     return (
-      <div className="text-center py-8 text-amber-600">
-        No session data available
-      </div>
-    );
-  }
+        <div className="overflow-x-auto">
+            {sessions.length === 0 ? (
+                <div className="text-center text-gray-500 py-6">
+                    No session data available
+                </div>
+            ) : (
+                <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                        <tr>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Login Time
+                            </th>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Logout Time
+                            </th>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Duration
+                            </th>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                User
+                            </th>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                IP Address
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                        {sessions.map((session, index) => (
+                            <tr
+                                key={index}
+                                className={`hover:bg-gray-50 ${
+                                    session.active ? "bg-green-50" : ""
+                                }`}
+                            >
+                                <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
+                                    {formatDate(session.start)}
+                                    {session.artificialLogin && (
+                                        <span className="ml-1 text-xs text-orange-500">
+                                            (est.)
+                                        </span>
+                                    )}
+                                </td>
+                                <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                                    {formatDate(session.end)}
+                                </td>
+                                <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                                    <span className="font-medium">
+                                        {session.durationText || "Unknown"}
+                                    </span>
+                                    {session.fallbackSession && (
+                                        <span className="ml-1 text-xs text-blue-500">
+                                            (est.)
+                                        </span>
+                                    )}
+                                </td>
+                                <td className="px-4 py-3 text-sm text-gray-500 max-w-[150px]">
+                                    <div
+                                        className="truncate"
+                                        title={session.user || "Unknown"}
+                                    >
+                                        {session.user || "Unknown"}
+                                    </div>
+                                </td>
+                                <td className="px-4 py-3 text-sm text-gray-500 max-w-[140px]">
+                                    <div
+                                        className="truncate"
+                                        title={session.ip || "Unknown"}
+                                    >
+                                        {session.ip || "Unknown"}
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+        </div>
+    )
+}
 
-  return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-amber-200">
-        <thead className="bg-amber-50">
-          <tr>
-            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">
-              Start Time
-            </th>
-            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">
-              End Time
-            </th>
-            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">
-              Duration
-            </th>
-            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">
-              IP Address
-            </th>
-            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">
-              Status
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-amber-100">
-          {sessions.map((session, index) => (
-            <motion.tr 
-              key={`${session.start}-${index}`}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="hover:bg-amber-50"
-            >
-              <td className="px-4 py-3 whitespace-nowrap text-sm text-amber-900">
-                {session.start}
-              </td>
-              <td className="px-4 py-3 whitespace-nowrap text-sm text-amber-900">
-                {session.end}
-              </td>
-              <td className="px-4 py-3 whitespace-nowrap text-sm text-amber-900">
-                {session.durationText}
-              </td>
-              <td className="px-4 py-3 whitespace-nowrap text-sm text-amber-900">
-                {session.ip}
-              </td>
-              <td className="px-4 py-3 whitespace-nowrap">
-                {session.ongoing ? (
-                  <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                    Active
-                  </span>
-                ) : (
-                  <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
-                    Completed
-                  </span>
-                )}
-              </td>
-            </motion.tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
-export default SessionList;
+export default SessionList
