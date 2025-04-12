@@ -341,5 +341,32 @@
         "event_type": "Login",
         "ip_address": "172.18.114.240",
         "status": "success"
+    },
+    {
+        "event_id": 4624,
+        "time": "2025-04-12 14:41",
+        "computer_name": "shivam",
+        "user_name": "NT AUTHORITY\\SYSTEM",
+        "event_type": "Login",
+        "ip_address": "172.18.114.240",
+        "status": "success"
+    },
+    {
+        "event_id": 4634,
+        "time": "2025-04-12 14:41",
+        "computer_name": "shivam",
+        "user_name": "SHIVAM\\shiva",
+        "event_type": "Logout",
+        "ip_address": "172.18.114.240",
+        "status": "logout"
+    },
+    {
+        "event_id": 4624,
+        "time": "2025-04-12 14:52",
+        "computer_name": "shivam",
+        "user_name": "NT AUTHORITY\\SYSTEM",
+        "event_type": "Login",
+        "ip_address": "172.18.114.240",
+        "status": "success"
     }
 ]

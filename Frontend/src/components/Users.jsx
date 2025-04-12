@@ -220,7 +220,7 @@ const Users = () => {
                         </div>
                     ) : (
                         <motion.div
-                            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+                            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
                             variants={containerVariants}
                             initial="hidden"
                             animate="visible"
@@ -234,8 +234,8 @@ const Users = () => {
                                         className="block h-full"
                                     >
                                         <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 border-l-4 border-amber-500 h-full flex flex-col">
-                                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                                                <div className="flex items-center">
+                                            <div className="flex flex-col sm:flex-row justify-between gap-2 mb-3">
+                                                <div className="flex items-center min-w-0 max-w-full">
                                                     <div className="bg-amber-100 rounded-full p-2 mr-3 flex-shrink-0">
                                                         <svg
                                                             xmlns="http://www.w3.org/2000/svg"
@@ -264,13 +264,13 @@ const Users = () => {
                                                     </div>
                                                 </div>
                                                 <div
-                                                    className={`mt-2 sm:mt-0 px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
+                                                    className={`mt-1 sm:mt-0 px-2 py-1 rounded-full text-xs font-medium self-start sm:self-center ${
                                                         user.status === "active"
                                                             ? "bg-green-100 text-green-800"
                                                             : "bg-gray-100 text-gray-800"
                                                     }`}
                                                 >
-                                                    <div className="flex items-center">
+                                                    <div className="flex items-center whitespace-nowrap">
                                                         <div
                                                             className={`h-2 w-2 rounded-full mr-1 ${
                                                                 user.status ===
@@ -312,8 +312,8 @@ const Users = () => {
                                             </div>
 
                                             <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
-                                                <div>
-                                                    <span className="text-xs font-medium text-gray-500">
+                                                <div className="min-w-0 mr-2">
+                                                    <span className="text-xs font-medium text-gray-500 whitespace-nowrap">
                                                         {user.total_events || 0}{" "}
                                                         events
                                                     </span>
