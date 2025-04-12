@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #f59e0b; /* Amber-500 */
+  --color-primary-dark: #d97706; /* Amber-600 */
+  --color-primary-light: #fbbf24; /* Amber-400 */
+  --color-secondary: #fef3c7; /* Amber-100 */
+  --color-bg: #fffbeb; /* Amber-50 */
+  --color-text: #78350f; /* Amber-900 */
+  --color-text-light: #92400e; /* Amber-800 */
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+    'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.dashboard-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(246, 158, 11, 0.1), 0 1px 2px 0 rgba(246, 158, 11, 0.06);
+  border: 1px solid rgba(246, 158, 11, 0.1);
+  transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(246, 158, 11, 0.15), 0 2px 4px -1px rgba(246, 158, 11, 0.06);
+  transform: translateY(-2px);
+  border-color: rgba(246, 158, 11, 0.2);
+}
