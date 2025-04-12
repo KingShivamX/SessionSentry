@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -17,7 +17,9 @@ function App() {
   });
   
   // Current user - in future versions this would be selectable
-  const currentUser = 'SHIVAM\\shiva'; 
+  // Include multiple usernames that could belong to the same user
+  // Using useMemo to prevent recreation of this array on every render
+  const currentUsernames = useMemo(() => ['SHIVAM\\shiva', 'shivamhippalgave@gmail.com'], []); 
 
   useEffect(() => {
     const loadSessionData = async () => {
@@ -25,8 +27,11 @@ function App() {
         setLoading(true);
         const events = await fetchLoginEvents();
         
-        // Filter events for the current user
-        const userEvents = events.filter(event => event.user_name === currentUser);
+        // Filter events for the current user - include all usernames that belong to the same person
+        const userEvents = events.filter(event => 
+          currentUsernames.includes(event.user_name) || 
+          (event.event_type === 'Logout' && currentUsernames.includes(event.user_name.replace('SHIVAM\\', '')))
+        );
         setUserSessions(userEvents);
         
         // Calculate metrics from the session data
@@ -45,14 +50,15 @@ function App() {
     const intervalId = setInterval(loadSessionData, 5 * 60 * 1000);
     
     return () => clearInterval(intervalId);
-  }, [currentUser]);
+    // This effect shouldn't need to re-run when currentUsernames changes since it's memoized
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
       
       <div className="flex flex-col flex-1 overflow-hidden">
-        <Header username={currentUser} status={metrics.currentStatus} />
+        <Header username={currentUsernames[0]} status={metrics.currentStatus} />
         
         <main className="flex-1 overflow-y-auto p-4 md:p-6">
           {loading ? (

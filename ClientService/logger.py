@@ -73,6 +73,8 @@ class WindowsEventLogger:
         self.logtype = 'Security'
         self.hand = None
         self.last_event_record = 0  # Track the last event record we processed
+        self.recent_events = {}  # Cache to track recent events and prevent duplicates
+        self.last_full_check = time.time()  # Track when we last did a full check
         
         try:
             # Open the event log
@@ -135,7 +137,26 @@ class WindowsEventLogger:
             self.last_check = current_time
         return self.server_status
     
-    def get_new_events(self) -> List[Dict]:
+    def reconnect(self):
+        """
+        Reconnect to the Windows Event Log if the handle is closed
+        """
+        try:
+            if self.hand:
+                try:
+                    win32evtlog.CloseEventLog(self.hand)
+                except Exception as e:
+                    print(f"[!] Error closing existing handle: {e}")
+                self.hand = None
+                
+            self.hand = win32evtlog.OpenEventLog(self.server, self.logtype)
+            print("[*] Reconnected to Windows Event Log")
+            return True
+        except Exception as e:
+            print(f"[!] Error reconnecting to event log: {e}")
+            return False
+    
+    def get_new_events(self, refresh_mode=False) -> List[Dict]:
         """
         Get new events since last check
         """
@@ -144,6 +165,11 @@ class WindowsEventLogger:
         
         # Track event counts for debugging
         event_counts = {4624: 0, 4625: 0, 4634: 0, 4647: 0, 4648: 0, 4672: 0}
+        
+        # Update last full check time
+        if refresh_mode:
+            print("[*] Running in refresh mode to check for missed events")
+            self.last_full_check = time.time()
         
         try:
             # Only open the event log if handle is not valid
@@ -242,6 +268,24 @@ class WindowsEventLogger:
                                         
                                         # Print detailed event info
                                         print(f"[EVENT] {event_type}: {user_name} on {event_data['computer_name']} at {human_time}")
+                                        
+                                        # Check if this is a potential duplicate before adding
+                                        # Create a signature for deduplication - based on event type, username, and time (to the minute)
+                                        human_time_min = human_time[:14]  # "YYYY-MM-DD HH:MM" - truncate to minute
+                                        event_sig = (event_type, user_name, human_time_min)
+                                        
+                                        # Check against recent events to avoid duplicates
+                                        # If we've seen this exact event in the last minute, skip it
+                                        current_time = datetime.datetime.now()
+                                        if event_sig in self.recent_events:
+                                            # Get the age of the cached event
+                                            age = (current_time - self.recent_events[event_sig]).total_seconds()
+                                            if age < 60:  # If event is less than 60 seconds old, it's a duplicate
+                                                print(f"[DEDUPLICATE] Skipping duplicate event: {event_type} for {user_name}")
+                                                continue
+                                        
+                                        # Update the cache with this event
+                                        self.recent_events[event_sig] = current_time
                                         
                                         # Add to events list
                                         events.append(event_data)
@@ -450,8 +494,37 @@ class WindowsEventLogger:
         # Sort events by time
         events_with_time.sort(key=lambda x: x[0])
         
-        # Extend the existing list with sorted events
-        for _, event in events_with_time:
+        # Deduplicate events before adding to the existing list
+        deduplicated_events = []
+        
+        # First, compare with existing events to avoid duplicating events already in the file
+        # Create a set of existing event signatures for quick lookup
+        existing_signatures = set()
+        for existing_event in existing_events:
+            # Create a signature based on event type, username, and rounded time
+            signature = (
+                existing_event['event_type'],
+                existing_event['user_name'],
+                existing_event['time'][:14]  # "YYYY-MM-DD HH:MM" - truncate to minute
+            )
+            existing_signatures.add(signature)
+        
+        # Process new events to deduplicate and avoid adding duplicates of existing events
+        for dt, event in events_with_time:
+            # Create a signature for this new event
+            signature = (
+                event['event_type'],
+                event['user_name'],
+                event['time'][:14]  # "YYYY-MM-DD HH:MM" - truncate to minute
+            )
+            
+            # Only add if this signature doesn't exist in processed events or existing events
+            if signature not in existing_signatures:
+                deduplicated_events.append(event)
+                existing_signatures.add(signature)  # Mark as processed
+        
+        # Extend the existing list with deduplicated events
+        for event in deduplicated_events:
             existing_events.append(event)
         
         # Write updated events to the JSON file immediately
@@ -463,10 +536,10 @@ class WindowsEventLogger:
         except Exception as e:
             print(f"[!] Error writing events file: {e}")
         
-        # Also write to the daily log file - write events in the same sorted order
+        # Also write to the daily log file - write only deduplicated events
         try:
             with open(log_file, 'a') as f:
-                for _, event in events_with_time:
+                for event in deduplicated_events:
                     f.write(f"Time: {event['time']}\n")
                     f.write(f"Event Type: {event['event_type']}\n")
                     f.write(f"User: {event['user_name']}\n")

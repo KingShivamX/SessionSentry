@@ -38,6 +38,13 @@ export const calculateSessionMetrics = (events) => {
   const sortedEvents = [...events].sort((a, b) => {
     return parseEventDate(a.time) - parseEventDate(b.time);
   });
+  
+  // Filter out system events to focus on user activity
+  const userEvents = sortedEvents.filter(event => 
+    !event.user_name.includes('SYSTEM') && 
+    !event.user_name.includes('LOCAL SERVICE') && 
+    !event.user_name.includes('NETWORK SERVICE')
+  );
 
   // Pair login and logout events to calculate session durations
   const sessions = [];
@@ -47,8 +54,8 @@ export const calculateSessionMetrics = (events) => {
   let monthlyMinutes = 0;
   
   // Process each event
-  for (let i = 0; i < sortedEvents.length; i++) {
-    const event = sortedEvents[i];
+  for (let i = 0; i < userEvents.length; i++) {
+    const event = userEvents[i];
     const eventDate = parseEventDate(event.time);
     
     if (event.event_type === 'Login') {
@@ -92,34 +99,37 @@ export const calculateSessionMetrics = (events) => {
   }
   
   // Check if the user is currently logged in
-  const currentStatus = currentLogin ? 'Online' : 'Offline';
+  // For more accurate status, check if the most recent event is a login
+  const lastEvent = userEvents.length > 0 ? userEvents[userEvents.length - 1] : null;
+  const currentStatus = (lastEvent && lastEvent.event_type === 'Login') ? 'Online' : 'Offline';
   
   // If user is currently logged in, add the ongoing session
-  if (currentLogin) {
+  if (currentLogin || (lastEvent && lastEvent.event_type === 'Login')) {
+    const startPoint = currentLogin ? currentLogin.start : parseEventDate(lastEvent.time);
     const now = new Date();
-    const ongoingDuration = differenceInMinutes(now, currentLogin.start);
+    const ongoingDuration = differenceInMinutes(now, startPoint);
     
     // Add ongoing session to today's, weekly, and monthly totals
-    if (isToday(currentLogin.start)) {
+    if (isToday(startPoint)) {
       todayMinutes += ongoingDuration;
     }
     
-    if (isThisWeek(currentLogin.start, { weekStartsOn: 1 })) {
+    if (isThisWeek(startPoint, { weekStartsOn: 1 })) {
       weeklyMinutes += ongoingDuration;
     }
     
-    if (isThisMonth(currentLogin.start)) {
+    if (isThisMonth(startPoint)) {
       monthlyMinutes += ongoingDuration;
     }
     
-    // Add ongoing session to the sessions array
+    // Add ongoing session to sessions array
     sessions.push({
-      start: currentLogin.startTime,
-      end: 'Current Session',
+      start: currentLogin ? currentLogin.startTime : lastEvent.time,
+      end: 'Current',
       duration: ongoingDuration,
       durationText: formatDuration(ongoingDuration),
-      ip: currentLogin.ip,
-      ongoing: true
+      ip: currentLogin ? currentLogin.ip : (lastEvent ? lastEvent.ip_address : '-'),
+      active: true
     });
   }
   

@@ -12,6 +12,7 @@ def main():
     API_URL = "http://localhost:3000/api"  # Local server URL
     API_KEY = "2123456789"  # API key
     LOCAL_MODE = True  # Set to True to run without server dependency
+    DEBUG_MODE = True  # Enable more detailed logging
 
     print("[*] Initializing SessionSentry...")
     
@@ -19,10 +20,16 @@ def main():
     try:
         with open('login_events.json', 'r') as f:
             json.load(f)  # Test if valid JSON
-    except (FileNotFoundError, json.JSONDecodeError):
-        print("[*] Creating new login_events.json file")
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"[*] Creating new login_events.json file (Error: {str(e)})")
         with open('login_events.json', 'w') as f:
             json.dump([], f)
+    
+    # Ensure logs directory exists
+    logs_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
+    if not os.path.exists(logs_dir):
+        os.makedirs(logs_dir)
+        print(f"[*] Created logs directory at {logs_dir}")
     
     # Only attempt server connection if not in local mode
     if not LOCAL_MODE:
@@ -45,10 +52,23 @@ def main():
         
         try:
             while True:
-                events = logger.get_new_events()
+                try:
+                    # Clear any existing handles and reconnect if needed
+                    if not logger.hand:
+                        logger.reconnect()
+                    
+                    # Get new events with better error handling
+                    events = logger.get_new_events()
+                    
+                    if events:
+                        print(f"\n[+] {len(events)} new security events detected:")
+                except Exception as e:
+                    print(f"[!] Error getting events: {e}")
+                    time.sleep(5)  # Wait longer on error
+                    continue
                 
                 if events:
-                    print(f"\n[+] {len(events)} new security events detected:")
+
                     
                     # Current date for organizing output
                     current_date = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -124,8 +144,21 @@ def main():
                             f.flush()
                             os.fsync(f.fileno())
                 
-                # Reduce polling interval for more immediate response
-                time.sleep(0.1)
+                # Check for new events every second
+                try:
+                    # Force check for any missed events every 30 seconds
+                    current_time = time.time()
+                    if hasattr(logger, 'last_full_check') and (current_time - logger.last_full_check) > 30:
+                        print("[*] Performing periodic full event check...")
+                        logger.flags = win32evtlog.EVENTLOG_BACKWARDS_READ | win32evtlog.EVENTLOG_SEQUENTIAL_READ
+                        logger.get_new_events(refresh_mode=True)  # Special refresh mode
+                        logger.flags = win32evtlog.EVENTLOG_FORWARDS_READ | win32evtlog.EVENTLOG_SEQUENTIAL_READ
+                        logger.last_full_check = current_time
+                except Exception as check_error:
+                    print(f"[!] Error during periodic check: {check_error}")
+                
+                # Sleep between checks
+                time.sleep(1)
                 
         except KeyboardInterrupt:
             print("\n[*] Stopping event monitoring...")

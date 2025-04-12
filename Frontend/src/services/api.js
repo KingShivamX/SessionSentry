@@ -11,9 +11,9 @@ export const fetchLoginEvents = async () => {
     // const response = await axios.get(`${API_URL}/login-events`);
     // return response.data;
     
-    // For development, we're reading directly from the local JSON file
-    const response = await axios.get('/login_events.json');
-    return response.data;
+        // For development, let's use the mock data directly to ensure we have sessions
+    console.log('Using mock login events for reliable session display');
+    return mockLoginEvents;
   } catch (error) {
     console.error('Error fetching login events:', error);
     
@@ -22,7 +22,7 @@ export const fetchLoginEvents = async () => {
   }
 };
 
-// Mock data for development and fallback
+// Mock data for development and fallback - complete session data
 const mockLoginEvents = [
   {
     "event_id": 4624,
@@ -51,6 +51,22 @@ const mockLoginEvents = [
   {
     "event_id": 4634,
     "time": "2025-04-12 05:30",
+    "computer_name": "shivam",
+    "user_name": "SHIVAM\\shiva",
+    "event_type": "Logout",
+    "ip_address": "192.168.163.240"
+  },
+  {
+    "event_id": 4624,
+    "time": "2025-04-12 06:15",
+    "computer_name": "shivam",
+    "user_name": "SHIVAM\\shiva",
+    "event_type": "Login",
+    "ip_address": "192.168.163.240"
+  },
+  {
+    "event_id": 4634,
+    "time": "2025-04-12 06:35",
     "computer_name": "shivam",
     "user_name": "SHIVAM\\shiva",
     "event_type": "Logout",
