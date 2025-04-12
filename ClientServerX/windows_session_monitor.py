@@ -8,6 +8,7 @@ import os
 import time
 import datetime
 import re
+import requests
 from pathlib import Path
 
 class WindowsSessionMonitor:
@@ -16,6 +17,11 @@ class WindowsSessionMonitor:
         self.event_cache = {}  # Cache for deduplication
         self.cache_timeout = 60  # Seconds to keep events in cache
         self.last_record_number = 0
+        
+        # API Configuration
+        self.api_url = "https://sessionsentryserver.onrender.com/api/events"  # Change this to your actual API endpoint
+        self.api_retry_count = 3
+        self.api_retry_delay = 2  # seconds
         
         # Ensure JSON file exists with valid content
         if not os.path.exists(self.log_file):
@@ -32,6 +38,53 @@ class WindowsSessionMonitor:
                 self.events = json.loads(content) if content else []
         except (json.JSONDecodeError, FileNotFoundError):
             self.events = []
+
+        # Set up security privileges
+        self._setup_security_privileges()
+
+    def _setup_security_privileges(self):
+        """Set up required security privileges for event log access"""
+        try:
+            # Get the current process token
+            ph = win32security.GetCurrentProcess()
+            th = win32security.OpenProcessToken(ph, win32con.TOKEN_ADJUST_PRIVILEGES | win32con.TOKEN_QUERY)
+            
+            # Enable all required privileges
+            privileges = [
+                win32security.LookupPrivilegeValue(None, win32security.SE_SECURITY_NAME),
+                win32security.LookupPrivilegeValue(None, win32security.SE_SYSTEMTIME_NAME),
+                win32security.LookupPrivilegeValue(None, win32security.SE_BACKUP_NAME),
+                win32security.LookupPrivilegeValue(None, win32security.SE_RESTORE_NAME)
+            ]
+            
+            for privilege in privileges:
+                try:
+                    win32security.AdjustTokenPrivileges(
+                        th,
+                        0,
+                        [(privilege, win32security.SE_PRIVILEGE_ENABLED)]
+                    )
+                except Exception as e:
+                    print(f"Warning: Could not enable privilege: {e}")
+            
+            # Verify privileges were set
+            for privilege in privileges:
+                try:
+                    privs = win32security.GetTokenInformation(th, win32security.TokenPrivileges)
+                    for priv in privs:
+                        if priv[0] == privilege:
+                            if priv[1] & win32security.SE_PRIVILEGE_ENABLED:
+                                print(f"Successfully enabled privilege: {win32security.LookupPrivilegeName(None, privilege)}")
+                            else:
+                                print(f"Warning: Privilege not enabled: {win32security.LookupPrivilegeName(None, privilege)}")
+                except Exception as e:
+                    print(f"Warning: Could not verify privilege: {e}")
+                    
+        except Exception as e:
+            print(f"Error setting up security privileges: {e}")
+            print("The application might not have sufficient permissions to read the Security event log.")
+            print("Please ensure the application is running with administrator privileges.")
+            print("You may need to run this script from an elevated command prompt.")
 
     def _get_local_ip(self):
         """Get the local IP address of the machine"""
@@ -120,6 +173,45 @@ class WindowsSessionMonitor:
                 
         return False
 
+    def _send_event_to_api(self, event_data):
+        """Send event data to the API endpoint with retry logic"""
+        # Format the event data to match server expectations
+        formatted_event = {
+            "events": [{
+                "event_id": event_data["event_id"],
+                "time": event_data["time"],
+                "computer_name": event_data["computer_name"],
+                "user_name": event_data["user_name"],
+                "event_type": event_data["event_type"],
+                "ip_address": event_data["ip_address"],
+                "status": "success" if event_data["event_type"] == "Login" else "logout"
+            }]
+        }
+
+        for attempt in range(self.api_retry_count):
+            try:
+                response = requests.post(
+                    self.api_url,
+                    json=formatted_event,
+                    headers={'Content-Type': 'application/json'},
+                    timeout=5  # 5 second timeout
+                )
+                
+                if response.status_code == 200:
+                    print(f"Successfully sent event to API: {event_data['event_type']} for {event_data['user_name']}")
+                    return True
+                else:
+                    print(f"API request failed with status code {response.status_code}: {response.text}")
+                    
+            except requests.exceptions.RequestException as e:
+                print(f"API request failed (attempt {attempt + 1}/{self.api_retry_count}): {str(e)}")
+                if attempt < self.api_retry_count - 1:
+                    time.sleep(self.api_retry_delay)
+                continue
+                
+        print("Failed to send event to API after all retry attempts")
+        return False
+
     def process_event(self, event):
         """Process a single Windows event"""
         # Extract event ID (mask qualifier bits)
@@ -173,7 +265,8 @@ class WindowsSessionMonitor:
             "computer_name": computer_name,
             "user_name": username,
             "event_type": event_type,
-            "ip_address": ip_address
+            "ip_address": ip_address,
+            "status": "success" if event_type == "Login" else "logout"
         }
         
         return event_record
@@ -181,14 +274,35 @@ class WindowsSessionMonitor:
     def monitor_events(self):
         """Monitor Windows security events in real-time"""
         print(f"Starting Windows session monitoring...")
+        print("Checking event log access permissions...")
+        
+        # Test event log access before starting the main loop
+        try:
+            test_handle = win32evtlog.OpenEventLog(None, "Security")
+            if test_handle:
+                print("Successfully accessed Security event log")
+                win32evtlog.CloseEventLog(test_handle)
+            else:
+                print("Failed to access Security event log")
+        except Exception as e:
+            print(f"Error accessing Security event log: {e}")
+            print("Please ensure you have administrator privileges and the Security event log is accessible.")
+            print("You may need to run this script from an elevated command prompt.")
+            return
         
         while True:
             h_evt_log = None
             try:
                 # Open the event log with proper error handling
-                h_evt_log = win32evtlog.OpenEventLog(None, "Security")
-                if not h_evt_log:
-                    print("Failed to open Security event log")
+                try:
+                    h_evt_log = win32evtlog.OpenEventLog(None, "Security")
+                    if not h_evt_log:
+                        print("Failed to open Security event log. Please ensure you have administrator privileges.")
+                        time.sleep(5)
+                        continue
+                except Exception as e:
+                    print(f"Error opening Security event log: {e}")
+                    print("Please ensure you have administrator privileges and the Security event log is accessible.")
                     time.sleep(5)
                     continue
                     
@@ -212,6 +326,7 @@ class WindowsSessionMonitor:
                     )
                 except Exception as e:
                     print(f"Error reading event log: {e}")
+                    print("Please ensure you have administrator privileges.")
                     # Make sure we close the handle in case of error
                     if h_evt_log:
                         try:
@@ -230,7 +345,7 @@ class WindowsSessionMonitor:
                     # Process the event
                     event_record = self.process_event(event)
                     
-                    # If we have a valid event, store it
+                    # If we have a valid event, store it and send to API
                     if event_record:
                         self.events.append(event_record)
                         
@@ -239,6 +354,9 @@ class WindowsSessionMonitor:
                             json.dump(self.events, f, indent=4)
                         
                         print(f"Recorded {event_record['event_type']} event for {event_record['user_name']} at {event_record['time']}")
+                        
+                        # Send event to API
+                        self._send_event_to_api(event_record)
                 
                 # Properly close the handle after we're done with it
                 if h_evt_log:
